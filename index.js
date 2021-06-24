@@ -12,6 +12,9 @@ app.use(cors());
 app.post("/v1/b-trees/height", (req, res) => {
     const body = req.body;
     try{
+        if(!body || !body.toTree){
+            throw new Error("Missing toTree property or body")
+        }
         const bTree = BTree(body.toTree);
         res.json({
             height : findHeight(bTree)
@@ -26,12 +29,18 @@ app.post("/v1/b-trees/height", (req, res) => {
 app.post("/v1/b-trees/neighbors", (req, res) => {
     const body = req.body;
     try{
+        if(!body || !body.toTree){
+            throw new Error("Missing toTree property or body")
+        }
+        if(!body.node){
+            throw new Error("Missing node property");
+        }
         const bTree = BTree(body.toTree);
         findNode(bTree, body.node, node => {
             res.json({
                 neighbors : {
-                    left : node.left,
-                    right : node.right
+                    left : node.left.value,
+                    right : node.right.value
                 }
             })
         });
@@ -45,11 +54,13 @@ app.post("/v1/b-trees/neighbors", (req, res) => {
 app.post("/v1/b-trees/bfs", (req, res) => {
     const body = req.body;
     try{
+        if(!body || !body.toTree){
+            throw new Error("Missing toTree property or body")
+        }
         const bTree = BTree(body.toTree);
-        bfs(bTree, node => {
-            console.log(node.value);
+        res.json({
+            bfs : bfs(bTree)
         });
-        res.send();
     }catch(e){
         res.status(400).json({
             message : "Bad request"

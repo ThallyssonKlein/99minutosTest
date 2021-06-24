@@ -35,15 +35,17 @@ export function findNode(root, value, callback){
     }
 }
 
-export function bfs(node, cb) {
+export function bfs(node) {
     var current = [node];
+    let nodes = [];
     while (current.length > 0) {
       var next = [];
       for (var node of current) {
-        cb(node);
+        nodes.push(node.value);
         if (node.left) next.push(node.left);
         if (node.right) next.push(node.right);
       }
       current = next;
     }
+    return nodes;
 }
