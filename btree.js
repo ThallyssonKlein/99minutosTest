@@ -35,7 +35,7 @@ export function findNode(root, value, callback){
     }
 }
 
-export function traverse(node, cb) {
+export function bfs(node, cb) {
     var current = [node];
     while (current.length > 0) {
       var next = [];

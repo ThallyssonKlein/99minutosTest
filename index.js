@@ -1,7 +1,7 @@
 import bparser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import BTree, { findHeight, findNode, traverse } from './btree.js';
+import BTree, { findHeight, findNode, bfs } from './btree.js';
 const port = 3000;
 
 const app = express();
@@ -46,7 +46,7 @@ app.post("/v1/b-trees/bfs", (req, res) => {
     const body = req.body;
     try{
         const bTree = BTree(body.toTree);
-        traverse(bTree, node => {
+        bfs(bTree, node => {
             console.log(node.value);
         });
         res.send();

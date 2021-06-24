@@ -1,6 +1,0 @@
-POST http://localhost:3000/v1/b-trees/bfs
-Content-Type: application/json
-
-{
-    "toTree" : [2, 7, 5, 9, 6, 4, 1]
-}
