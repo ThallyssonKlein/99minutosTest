@@ -25,3 +25,12 @@ export function findHeight(root){
     }
     return Math.max(findHeight(root.left), findHeight(root.right)) + 1;
 }
+
+export function findNode(root, value, callback){
+    if(root && root.value === value){
+        callback(root);
+    }else{
+        root.left && findNode(root.left, value, callback);
+        root.right && findNode(root.right, value, callback);
+    }
+}

@@ -1,7 +1,7 @@
 import bparser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import BTree, { findHeight } from './btree.js';
+import BTree, { findHeight, findNode } from './btree.js';
 const port = 3000;
 
 const app = express();
@@ -14,11 +14,30 @@ app.post("/v1/b-trees/height", (req, res) => {
     try{
         const bTree = BTree(body.toTree);
         res.json({
-            message : findHeight(bTree)
+            height : findHeight(bTree)
         })
     }catch(e){
         res.status(400).json({
             message : "Bad request"
+        });
+    }
+});
+
+app.post("/v1/b-trees/neighbors", (req, res) => {
+    const body = req.body;
+    try{
+        const bTree = BTree(body.toTree);
+        findNode(bTree, body.node, node => {
+            res.json({
+                neighbors : {
+                    left : node.left,
+                    right : node.right
+                }
+            })
+        });
+    }catch(e){
+        res.status(400).json({
+            message : e.stack
         });
     }
 });
