@@ -34,3 +34,16 @@ export function findNode(root, value, callback){
         root.right && findNode(root.right, value, callback);
     }
 }
+
+export function traverse(node, cb) {
+    var current = [node];
+    while (current.length > 0) {
+      var next = [];
+      for (var node of current) {
+        cb(node);
+        if (node.left) next.push(node.left);
+        if (node.right) next.push(node.right);
+      }
+      current = next;
+    }
+}
